@@ -1,5 +1,7 @@
 # Quiz Registration Backend
 
+RCCG Quiz Registration Backend
+
 This repository is the backend code for the Quiz Registration
 
 ---
@@ -39,3 +41,5 @@ they include:
 ## Running the server
 To run the server, make sure your database is running
 then run `npm run server` or `yarn run server`
+
+
