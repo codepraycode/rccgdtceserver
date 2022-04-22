@@ -7,24 +7,24 @@ const { generateRegionsData } = require('../models/data_generator');
 // console.log(Admin.classLevelMethod());
 
 const getRegionData = asyncHandler(async(req, res, next) => {
-    // const { admin } = req;
+    const { region } = req;
     // // console.log(">>>  >>> ", admin)
-    // res.status(200).json(Admin.filterJSON(admin));
-    res.sendStatus(200);
-    return
+    return res.status(200).json(Regions.filterJSON(region));
+    // res.sendStatus(200);
+
 });
 
 
 const getAllRegions = asyncHandler(async(req, res, next) => {
-    // const all_Admin = await Admin.findAll();
-    // if (!all_Admin || all_Admin.length === 0) {
-    //     res.status(200).json([]);
-    //     return
-    //     // throw new Error("No Admin Found");
-    // }
+    const all_regions = await Regions.findAll();
+    if (!all_regions || all_regions.length === 0) {
+        res.status(200).json([]);
+        return
+        // throw new Error("No Admin Found");
+    }
 
-    // res.status(200).json(Admin.filterJSON(all_Admin));
-    return res.sendStatus(200);
+    return res.status(200).json(Regions.filterJSON(all_regions));
+
 });
 
 const createRegion = asyncHandler(async(req, res, next) => {
@@ -35,7 +35,7 @@ const createRegion = asyncHandler(async(req, res, next) => {
 
     Regions.bulkCreate(regions)
         .then((created_regions) => {
-            return res.status(201).json(Regions.filterJSON(created_regions));
+            return res.status(201).json({ message: "created " + created_regions.length + " regions" });
         })
         .catch(err => {
             console.log(err);
@@ -52,80 +52,73 @@ const loginRegion = asyncHandler(async(req, res, next) => {
     // return res.sendStatus(200)
     const { email, password } = req.body;
 
-    // Regions.findOne({ where: { email } })
-    //     .then(async(region) => {
-    //         if (!region) {
-    //             res.status(200).json({
-    //                 isAuth: false,
-    //                 message: 'Auth Failed, Region not found'
-    //             })
+    Regions.findOne({ where: { email } })
+        .then(async(region) => {
+            if (!region) {
+                res.status(200).json({
+                    isAuth: false,
+                    message: 'Auth Failed, Region not found'
+                })
 
-    //             return;
-    //         };
+                return;
+            };
 
 
-    //         region.comparePassword(password)
-    //             .then(async(isMatch) => {
-    //                 if (!isMatch) {
-    //                     res.status(200).json({
-    //                         isAuth: false,
-    //                         message: 'Wrong Password'
-    //                     })
-    //                     return
-    //                 }
+            region.comparePassword(password)
+                .then(async(isMatch) => {
+                    if (!isMatch) {
+                        res.status(401).json({
+                            isAuth: false,
+                            message: 'Wrong Password'
+                        })
+                        return
+                    }
 
-    //                 await admin.generateToken()
+                    await region.generateToken()
 
-    //                 await admin.save()
-    //                     // console.log(teacher.toJSON())
-    //                     // res.status(200).json(teacher.toJSON())
+                    await region.save()
+                        // console.log(teacher.toJSON())
+                        // res.status(200).json(teacher.toJSON())
 
-    //                 res.cookie('auth', admin.token).json({
-    //                     isAuth: true,
-    //                     id: admin._id,
-    //                     avatar: admin.avatar,
-    //                     email: admin.email,
-    //                     username: admin.username,
-    //                     token: admin.token
-    //                 });
+                    res.cookie('auth', region.token).json({
+                        isAuth: true,
+                        id: region._id,
+                        email: region.email,
+                        token: region.token
+                    });
 
-    //                 return
-    //             })
-    //             .catch((error) => {
-    //                 console.log(error);
-    //                 res.status(200).json({
-    //                     isAuth: false,
-    //                     message: 'Could not Authenticate'
-    //                 })
+                    return
+                })
+                .catch((error) => {
+                    console.log(error);
+                    res.status(200).json({
+                        isAuth: false,
+                        message: 'Could not Authenticate'
+                    })
 
-    //                 return
-    //             })
-    //     })
-    //     .catch((error) => {
-    //         console.log(error)
-    //         res.status(500).json(error);
+                    return
+                })
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(500).json(error);
 
-    //         return;
-    //     })
-    // // res.sendStatus(200);
+            return;
+        })
+        // res.sendStatus(200);
 
 });
 
 const logoutRegion = asyncHandler(async(req, res, next) => {
-    return res.sendStatus(200);
-    // let { admin } = req;
+    // return res.sendStatus(200);
+    let { region } = req;
 
-    // await admin.deleteToken()
+    await region.deleteToken()
 
-    // await admin.save()
-    //     // console.log(teacher.toJSON())
-    //     // res.status(200).json(teacher.toJSON())
-    // res.clearCookie('auth').sendStatus(200);
-    // user.deleteToken(token, (err, user) => {
-    //     if (err) return res.status(400).send(err);
-
-    //     res.sendStatus(200);
-    // });
+    await region.save()
+        // console.log(teacher.toJSON())
+        // res.status(200).json(teacher.toJSON())
+    return res.clearCookie('auth').sendStatus(200);
 
 });
 

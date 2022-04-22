@@ -42,12 +42,29 @@ const Schema = {
         }
     },
     password: {
+        type: DataTypes.VIRTUAL,
+        get() {
+            if (this.custom_password) {
+                return this.custom_password
+            }
+
+            return this.default_password;
+        },
+        set(value) {
+
+            this.custom_password = value;
+        }
+    },
+    custom_password: {
         type: DataTypes.STRING,
         allowNull: true
     },
     default_password: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    token: {
+        type: DataTypes.STRING
     }
 }
 
@@ -86,8 +103,18 @@ class Regions extends AppModel {
 
     };
 
-    comparePassword(password) {
-        return bcrypt.compare(password, this.password);
+    async comparePassword(password) {
+        // console.log(this.password);
+        let region = this;
+
+        if (region.custom_password !== null) {
+            let isMatch = await bcrypt.compare(password, this.custom_password);
+
+            return isMatch;
+        }
+
+        return password === region.default_password;
+
     }
 
     generateToken = async function() {
@@ -111,6 +138,18 @@ module.exports = (sequelize) => {
         timestamps: true, // adding timestamps
         modelName: 'Regions', // We need to choose the model name
         tableName: 'Regions',
+        hooks: {
+            beforeCreate: async(region) => {
+                if (region.password) {
+                    // const salt = await bcrypt.genSaltSync(SALT_I);
+
+                    // region.password = bcrypt.hashSync(region.password, salt);
+                    let hash = await Regions.generateHash(region);
+
+                    region.password = hash
+                }
+            }
+        }
     });
 
 

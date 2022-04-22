@@ -1,7 +1,5 @@
-const { Model, DataTypes } = require("sequelize");
+const { DataTypes } = require("sequelize");
 const { AppModel } = require('./utils');
-
-const SALT_I = 10;
 
 
 const Schema = {

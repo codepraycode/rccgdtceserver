@@ -1,6 +1,6 @@
-const { Teachers, Admin } = require('../models');
+const { Regions } = require('../models');
 
-let teacherAuth = (req, res, next) => {
+let regionAuth = (req, res, next) => {
     let d_token = null;
 
 
@@ -22,7 +22,7 @@ let teacherAuth = (req, res, next) => {
         d_token = token;
     }
 
-    Teachers.decodeToken(d_token, (err, dteacher) => {
+    Regions.decodeToken(d_token, (err, dregion) => {
         if (err) {
             console.log(err)
             res.status(401).json({
@@ -32,7 +32,7 @@ let teacherAuth = (req, res, next) => {
             return
         }
 
-        if (!dteacher) return res.status(401).json({
+        if (!dregion) return res.status(401).json({
             error: true,
             message: "Invalid token, required you are logged in"
         });
@@ -40,40 +40,12 @@ let teacherAuth = (req, res, next) => {
 
         req.token = d_token;
 
-        req.teacher = dteacher;
+        req.region = dregion;
         next();
 
     })
 
 
-
-}
-
-let adminAuth = (req, res, next) => {
-    let token = req.cookies.auth;
-
-    Admin.decodeToken(token, (err, dadmin) => {
-        if (err) {
-            console.log(err)
-            res.status(401).json({
-                error: true,
-                message: 'Could Not Verify Logged In'
-            })
-            return
-        }
-
-        if (!dadmin) return res.status(401).json({
-            error: true,
-            message: "Not logged in, required you are logged in"
-        });
-
-
-        req.token = token;
-        // console.log(dadmin.toJSON())
-        req.admin = dadmin;
-        next();
-
-    })
 
 }
 
@@ -89,4 +61,4 @@ const errorHandler = (err, req, res, next) => {
 };
 
 
-module.exports = { teacherAuth, adminAuth, errorHandler }
+module.exports = { regionAuth, errorHandler }
