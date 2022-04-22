@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const { Regions } = require('../models');
+const { generateRegionsData } = require('../models/data_generator');
 
 
 
@@ -29,65 +30,41 @@ const getAllRegions = asyncHandler(async(req, res, next) => {
 const createRegion = asyncHandler(async(req, res, next) => {
     // let id = rand(10);
     // console.log(req.body)
-    return res.sendStatus(200)
+    let regions = generateRegionsData();
 
 
-    // const admin_user = Admin.build({...req.body });
-    // admin_user.validate()
-    //     .then(() => {
+    Regions.bulkCreate(regions)
+        .then((created_regions) => {
+            return res.status(201).json(Regions.filterJSON(created_regions));
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json(Regions.getCleanError(err))
+        })
 
-    //         //
-    //         admin_user.save()
-    //             .then(async() => {
-    //                 // console.log(admin_user.toJSON())
-
-
-    //                 let subi = await Subscription.create({ admin_id: admin_user._id })
-
-    //                 await admin_user.addSubscription(subi)
-
-    //                 res.status(201).json(Admin.filterJSON(admin_user))
-
-    //             })
-    //             .catch((error) => {
-    //                 // console.
-    //                 res.status(409).json({
-    //                     message: "Admin Already Exist",
-    //                     // error
-    //                 });
-    //             })
-    //             // .then()
-    //             // .catch()
-    //     })
-    //     .catch(error => {
-    //         // console.log(error);
-    //         let error_response = Admin.getCleanError(error);
-    //         res.status(400).json(error_response);
-    //     })
-
+    // return res.status(200).json(regions)
 });
-
 
 
 
 // Authentication
 const loginRegion = asyncHandler(async(req, res, next) => {
-    return res.sendStatus(200)
-        // const { email, password } = req.body;
+    // return res.sendStatus(200)
+    const { email, password } = req.body;
 
-    // Admin.findOne({ where: { email } })
-    //     .then(async(admin) => {
-    //         if (!admin) {
+    // Regions.findOne({ where: { email } })
+    //     .then(async(region) => {
+    //         if (!region) {
     //             res.status(200).json({
     //                 isAuth: false,
-    //                 message: 'Auth Failed, Email not found'
+    //                 message: 'Auth Failed, Region not found'
     //             })
 
     //             return;
     //         };
 
 
-    //         admin.comparePassword(password)
+    //         region.comparePassword(password)
     //             .then(async(isMatch) => {
     //                 if (!isMatch) {
     //                     res.status(200).json({
@@ -130,7 +107,7 @@ const loginRegion = asyncHandler(async(req, res, next) => {
 
     //         return;
     //     })
-    // res.sendStatus(200);
+    // // res.sendStatus(200);
 
 });
 
