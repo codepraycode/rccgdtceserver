@@ -43,3 +43,4 @@ To run the server, make sure your database is running
 then run `npm run server` or `yarn run server`
 
 
+All Api endpoints are included in postman collection

@@ -1,0 +1,314 @@
+{
+	"info": {
+		"_postman_id": "1efba09a-db4e-47e9-aaed-7229a61e2d77",
+		"name": "Quiz reg",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Participants",
+			"item": [
+				{
+					"name": "Get Participant Data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/participants/data",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"participants",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Participant",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/participants/delete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"participants",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update A Participant",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/participants/update",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"participants",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create A Participant",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/participants/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"participants",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Region",
+			"item": [
+				{
+					"name": "Region Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"region33@rccgdtce.com\",\r\n    \"password\":\"rccglp33\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/region/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"region",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Region Logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/region/logout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"region",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create region",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/region/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"region",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get region data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/region/data",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"region",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all regions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/region/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"region",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update region password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"rccglp32\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/region/update",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"region",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Province",
+			"item": [
+				{
+					"name": "create province",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Lagos Province 22\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/province/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"province",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get province data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"3e9836ef-aaa8-45b8-81b0-9e98dbd3f6bb\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/province/data",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"province",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all provinces",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/province/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"province",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
