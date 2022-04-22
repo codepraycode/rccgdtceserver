@@ -16,6 +16,14 @@ const sequelize = new Sequelize(database, username, password, {
 
 
 const Participants = require("./participant")(sequelize);
+const Regions = require("./regions")(sequelize);
+const Provinces = require("./provinces")(sequelize);
+
+
+// Relation
+Regions.hasMany(Provinces, { onDelete: 'CASCADE' })
+Provinces.belongsTo(Regions, { onDelete: "CASCADE" });
+
 
 sequelize.authenticate().then(() => {
     console.log("Connected To DataBase");
@@ -29,5 +37,7 @@ sequelize.authenticate().then(() => {
 });
 
 module.exports = {
-    Participants
+    Participants,
+    Regions,
+    Provinces
 }

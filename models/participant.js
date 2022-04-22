@@ -1,7 +1,5 @@
-const bcrypt = require('bcrypt');
 const { Model, DataTypes } = require("sequelize");
-const { SECRET } = require('../config/config');
-const jwt = require('jsonwebtoken');
+const { AppModel } = require('./utils');
 
 const SALT_I = 10;
 
@@ -17,33 +15,33 @@ const Schema = {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    first_name:{
-        type:DataTypes.STRING,
-        allowNull:false,
-        validate:{
-            notEmpty:{
-                msg:"first name is required"
+    first_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notEmpty: {
+                msg: "first name is required"
             },
-            notNull:{
-                msg:"first name is required"
+            notNull: {
+                msg: "first name is required"
             }
         }
     },
-    last_name:{
-        type:DataTypes.STRING,
-        allowNull:false,
-        validate:{
-            notEmpty:{
-                msg:"last name is required"
+    last_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notEmpty: {
+                msg: "last name is required"
             },
-            notNull:{
-                msg:"last name is required"
+            notNull: {
+                msg: "last name is required"
             }
         }
     },
-    other_name:{
-        type:DataTypes.STRING,
-        defaultValue:' '
+    other_name: {
+        type: DataTypes.STRING,
+        defaultValue: ' '
     },
     fullName: {
         type: DataTypes.VIRTUAL,
@@ -77,7 +75,7 @@ const Schema = {
         validate: {
             isIn: {
                 args: [
-                    ['lower_junior', 'upper_junior','lower_teen','super_teen']
+                    ['lower_junior', 'upper_junior', 'lower_teen', 'super_teen']
                 ],
                 msg: "Must be either 'lower_junior', 'upper_junior','lower_teen', or 'super_teen'"
             },
@@ -104,8 +102,8 @@ const Schema = {
         }
     },
     // age,
-    province_id:{
-        type:DataTypes.STRING,
+    province_id: {
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
             notEmpty: {
@@ -117,8 +115,8 @@ const Schema = {
         }
     },
 
-    zone:{
-        type:DataTypes.STRING,
+    zone: {
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
             notEmpty: {
@@ -129,8 +127,8 @@ const Schema = {
             }
         }
     },
-    area:{
-        type:DataTypes.STRING,
+    area: {
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
             notEmpty: {
@@ -141,8 +139,8 @@ const Schema = {
             }
         }
     },
-    parish:{
-        type:DataTypes.STRING,
+    parish: {
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
             notEmpty: {
@@ -160,7 +158,7 @@ const Schema = {
         validate: {
             isIn: {
                 args: [
-                    ['quiz_competition', 'bible_recitation','essay_writting','debate', 'spelling_bee']
+                    ['quiz_competition', 'bible_recitation', 'essay_writting', 'debate', 'spelling_bee']
                 ],
                 msg: "Must be either 'quiz_competition', 'bible_recitation','essay_writting','debate', 'spelling_bee' "
             },
@@ -171,17 +169,17 @@ const Schema = {
 
     },
 
-    birth_certificate:{
+    birth_certificate: {
         type: DataTypes.STRING,
         allowNull: true,
     },
 
-    letter_of_recommendation:{
+    letter_of_recommendation: {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    regional_coordinator:{
-        type:DataTypes.STRING,
+    regional_coordinator: {
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
             notEmpty: {
@@ -192,8 +190,8 @@ const Schema = {
             }
         }
     },
-    provincial_coordinator:{
-        type:DataTypes.STRING,
+    provincial_coordinator: {
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
             notEmpty: {
@@ -206,7 +204,7 @@ const Schema = {
     },
 }
 
-class Participants extends Model {}
+class Participants extends AppModel {}
 
 module.exports = (sequelize) => {
     Participants.init({...Schema }, {
