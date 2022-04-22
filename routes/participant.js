@@ -3,7 +3,7 @@ const router = express.Router();
 
 const {
     getAllData,
-    getDataById,
+    // getDataById,
     createParticipant,
     updateParticipant,
     deleteParticipant
@@ -11,6 +11,13 @@ const {
 
 
 // ============= MIDDLE WARES ===============
+const { regionAuth } = require("../middlewares/auth");
+
+// router.get('/', regionAuth);
+router.post("/create", regionAuth);
+router.put("/update", regionAuth);
+router.get("/data", regionAuth);
+router.delete("/delete", regionAuth);
 // ==========================================
 
 

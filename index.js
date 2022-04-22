@@ -21,7 +21,7 @@ app.use(errorHandler);
 
 
 
-app.use("/api/participants", require("./routes/participant"));
+app.use("/api/participant", require("./routes/participant"));
 app.use("/api/region", require("./routes/region"));
 app.use("/api/province", require("./routes/province"));
 

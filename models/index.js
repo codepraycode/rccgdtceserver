@@ -15,14 +15,22 @@ const sequelize = new Sequelize(database, username, password, {
 
 
 
-const Participants = require("./participant")(sequelize);
+const Participant = require("./participant")(sequelize);
 const Regions = require("./regions")(sequelize);
 const Province = require("./province")(sequelize);
 
 
-// Relation
+// Relations
 Regions.hasMany(Province, { onDelete: 'CASCADE' })
 Province.belongsTo(Regions, { onDelete: "CASCADE" });
+
+
+Province.hasMany(Participant, { onDelete: 'CASCADE' })
+Participant.belongsTo(Province, { onDelete: "CASCADE" });
+
+
+Regions.hasMany(Participant, { onDelete: 'CASCADE' })
+Participant.belongsTo(Regions, { onDelete: "CASCADE" });
 
 
 sequelize.authenticate().then(() => {
@@ -37,7 +45,7 @@ sequelize.authenticate().then(() => {
 });
 
 module.exports = {
-    Participants,
+    Participant,
     Regions,
     Province
 }

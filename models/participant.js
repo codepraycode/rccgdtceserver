@@ -100,18 +100,18 @@ const Schema = {
         }
     },
     // age,
-    province_id: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: {
-                msg: "Province is required"
-            },
-            notNull: {
-                msg: "Province is required"
-            }
-        }
-    },
+    // province_id: {
+    //     type: DataTypes.STRING,
+    //     allowNull: false,
+    //     validate: {
+    //         notEmpty: {
+    //             msg: "Province is required"
+    //         },
+    //         notNull: {
+    //             msg: "Province is required"
+    //         }
+    //     }
+    // },
 
     zone: {
         type: DataTypes.STRING,
@@ -202,16 +202,16 @@ const Schema = {
     },
 }
 
-class Participants extends AppModel {}
+class Participant extends AppModel {}
 
 module.exports = (sequelize) => {
-    Participants.init({...Schema }, {
+    Participant.init({...Schema }, {
         sequelize, // We need to pass the connection instance
         timestamps: true, // adding timestamps
-        modelName: 'Participants', // We need to choose the model name
+        modelName: 'Participant', // We need to choose the model name
         tableName: 'Participants',
     });
 
 
-    return Participants;
+    return Participant;
 };
