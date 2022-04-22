@@ -23,7 +23,7 @@ class AppModel extends Model {
 
         if (Array.isArray(instance)) {
             let response = instance.map(each => {
-                let { password, token, ...rest } = each.dataValues;
+                let { current_password, password, default_password, createdAt, updatedAt, token, ...rest } = each.dataValues;
 
                 return rest
             })
