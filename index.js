@@ -22,6 +22,8 @@ app.use(errorHandler);
 
 
 app.use("/api/participants", require("./routes/participant"));
+app.use("/api/region", require("./routes/region"));
+app.use("/api/province", require("./routes/province"));
 
 
 const PORT = process.env.PORT || 5000;
