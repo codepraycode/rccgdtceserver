@@ -24,16 +24,16 @@ const Schema = {
     //region_id
 }
 
-class Provinces extends AppModel {}
+class Province extends AppModel {}
 
 module.exports = (sequelize) => {
-    Provinces.init({...Schema }, {
+    Province.init({...Schema }, {
         sequelize, // We need to pass the connection instance
         timestamps: true, // adding timestamps
-        modelName: 'Provinces', // We need to choose the model name
+        modelName: 'Province', // We need to choose the model name
         tableName: 'Provinces',
     });
 
 
-    return Provinces;
+    return Province;
 };

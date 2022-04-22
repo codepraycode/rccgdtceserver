@@ -9,6 +9,11 @@ const {
 
 
 // ============= MIDDLE WARES ===============
+const { regionAuth } = require("../middlewares/auth");
+
+router.get('/', regionAuth);
+router.post("/create", regionAuth);
+router.get("/data", regionAuth);
 //==============================================
 
 

@@ -1,69 +1,78 @@
 const asyncHandler = require("express-async-handler");
-const { Provinces } = require('../models');
+const { Province } = require('../models');
 
 
 
 // console.log(Admin.classLevelMethod());
 
 const getProvinceData = asyncHandler(async(req, res, next) => {
-    // const { admin } = req;
+    const { region, body } = req;
+
+    let { id } = body;
+    if (!id) {
+        return res.status(400).json({
+            message: "No Province `id` provided"
+        })
+    }
     // // console.log(">>>  >>> ", admin)
-    // res.status(200).json(Admin.filterJSON(admin));
-    res.sendStatus(200);
+    let d_province = await Province.findOne({ where: { RegionId: region._id, _id: id } })
+
+    if (!d_province) {
+        return res.status(404).json({});
+    }
+    res.status(200).json(Province.filterJSON(d_province));
+    // res.sendStatus(200);
     return
 });
 
 
 const getAllProvinces = asyncHandler(async(req, res, next) => {
-    // const all_Admin = await Admin.findAll();
-    // if (!all_Admin || all_Admin.length === 0) {
-    //     res.status(200).json([]);
-    //     return
-    //     // throw new Error("No Admin Found");
-    // }
+    const { region } = req;
+    const provinces = await Province.findAll({ where: { RegionId: region._id } });
+    if (!provinces || provinces.length === 0) {
+        res.status(200).json([]);
+        return
+        // throw new Error("No Admin Found");
+    }
 
-    // res.status(200).json(Admin.filterJSON(all_Admin));
-    return res.sendStatus(200);
+    return res.status(200).json(Province.filterJSON(provinces));
+    // return res.sendStatus(200);
 });
 
 const createProvince = asyncHandler(async(req, res, next) => {
     // let id = rand(10);
     // console.log(req.body)
-    return res.sendStatus(200)
+    const { region, body } = req;
 
+    const new_province = await Province.build({...body });
+    new_province.validate()
+        .then(() => {
 
-    // const admin_user = Admin.build({...req.body });
-    // admin_user.validate()
-    //     .then(() => {
+            //
+            new_province.save()
+                .then(async() => {
+                    // console.log(admin_user.toJSON())
 
-    //         //
-    //         admin_user.save()
-    //             .then(async() => {
-    //                 // console.log(admin_user.toJSON())
+                    await region.addProvince(new_province)
 
+                    res.status(201).json(Province.filterJSON(new_province))
 
-    //                 let subi = await Subscription.create({ admin_id: admin_user._id })
-
-    //                 await admin_user.addSubscription(subi)
-
-    //                 res.status(201).json(Admin.filterJSON(admin_user))
-
-    //             })
-    //             .catch((error) => {
-    //                 // console.
-    //                 res.status(409).json({
-    //                     message: "Admin Already Exist",
-    //                     // error
-    //                 });
-    //             })
-    //             // .then()
-    //             // .catch()
-    //     })
-    //     .catch(error => {
-    //         // console.log(error);
-    //         let error_response = Admin.getCleanError(error);
-    //         res.status(400).json(error_response);
-    //     })
+                })
+                .catch((error) => {
+                    // console.
+                    res.status(409).json({
+                        message: "Admin Already Exist",
+                        // error
+                    });
+                })
+                // .then()
+                // .catch()
+        })
+        .catch(error => {
+            // console.log(error);
+            let error_response = Province.getCleanError(error);
+            res.status(400).json(error_response);
+        })
 
 });
 
