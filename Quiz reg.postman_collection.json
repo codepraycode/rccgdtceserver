@@ -14,13 +14,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/participants/data",
+							"raw": "{{url}}/api/participant/data",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
-								"participants",
+								"participant",
 								"data"
 							]
 						}
@@ -31,15 +31,25 @@
 					"name": "Delete Participant",
 					"request": {
 						"method": "DELETE",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"3a1ac7da-14b4-40eb-9530-d3851517b03b\"\r\n}"
+						},
 						"url": {
-							"raw": "{{url}}/api/participants/delete",
+							"raw": "{{url}}/api/participant/delete",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
-								"participants",
+								"participant",
 								"delete"
 							]
 						}
@@ -50,15 +60,25 @@
 					"name": "Update A Participant",
 					"request": {
 						"method": "PUT",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"3a1ac7da-14b4-40eb-9530-d3851517b03b\",\r\n    \"regional_coordinator\": \"Mr Samuel Ayodeji\"\r\n}"
+						},
 						"url": {
-							"raw": "{{url}}/api/participants/update",
+							"raw": "{{url}}/api/participant/update",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
-								"participants",
+								"participant",
 								"update"
 							]
 						}
@@ -69,15 +89,25 @@
 					"name": "Create A Participant",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\":\"Lorem\",\r\n    \"last_name\": \"Ipsum\",\r\n    \"gender\": \"male\",\r\n    \"category\": \"lower_junior\",\r\n    \"date_of_birth\": \"2004/4/15\",\r\n    \"zone\": \"Zone 4\",\r\n    \"area\": \"Area 32\",\r\n    \"parish\": \"Jesus House\",\r\n    \"quiz_category\": \"quiz_competition\",\r\n    \"province_id\":\"821d448a-6f00-4d9d-9cfd-c4a770f95165\",\r\n    \"regional_coordinator\": \"Mr Samuel\",\r\n    \"provincial_coordinator\": \"Mr Kunle\"\r\n}"
+						},
 						"url": {
-							"raw": "{{url}}/api/participants/create",
+							"raw": "{{url}}/api/participant/create",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
-								"participants",
+								"participant",
 								"create"
 							]
 						}
@@ -102,7 +132,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"region33@rccgdtce.com\",\r\n    \"password\":\"rccglp33\"\r\n}"
+							"raw": "{\r\n    \"email\":\"region6@rccgdtce.com\",\r\n    \"password\":\"LFGxW5E\"\r\n}"
 						},
 						"url": {
 							"raw": "{{url}}/api/region/login",
