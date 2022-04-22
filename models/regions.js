@@ -56,15 +56,15 @@ const Schema = {
         }
     },
     custom_password: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true
     },
     default_password: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false
     },
     token: {
-        type: DataTypes.STRING
+        type: DataTypes.TEXT
     }
 }
 
@@ -129,6 +129,17 @@ class Regions extends AppModel {
         let region = this;
 
         region.token = null;
+    }
+
+
+    async updatePassword(new_password) {
+        let region = this;
+        // const salt = await bcrypt.genSaltSync(SALT_I);
+
+        // region.password = bcrypt.hashSync(region.password, salt);
+        let hash = await Regions.generateHash(new_password);
+
+        region.password = hash
     }
 }
 

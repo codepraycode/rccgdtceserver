@@ -123,11 +123,58 @@ const logoutRegion = asyncHandler(async(req, res, next) => {
 });
 
 
+const updateRegion = asyncHandler(async(req, res, next) => {
+    const { region, body } = req;
+
+    //  filter fields
+    let { password } = body
+    // const d_admin = await
+
+    if (!password) {
+        return res.status(200).json({
+            message: "Password wasn't updated since no password was provided"
+        });
+    }
+
+    if (region.custom_password !== null) {
+        return res.status(403).json({
+            message: "Password had been updated previously, cannot update again"
+        })
+    }
+
+    try {
+
+        await region.updatePassword(password);
+    } catch (err) {
+        console.error(err)
+        let error_msg = Regions.getCleanError(err);
+        res.status(400).json({
+            error: error_msg
+        });
+        return
+    }
+
+    try {
+        await region.save()
+    } catch (error) {
+        res.status(400).json({
+            error: err
+        });
+        return
+    }
+
+
+    res.status(200).json(Regions.filterJSON(region));
+
+});
+
+
 
 module.exports = {
     getRegionData,
     getAllRegions,
     createRegion,
     loginRegion,
-    logoutRegion
+    logoutRegion,
+    updateRegion
 }

@@ -6,7 +6,8 @@ const {
     getAllRegions,
     createRegion,
     loginRegion,
-    logoutRegion
+    logoutRegion,
+    updateRegion
 } = require("../controllers/regions");
 
 
@@ -15,7 +16,8 @@ const { regionAuth } = require("../middlewares/auth");
 
 router.get('/logout', regionAuth)
 router.get("/data", regionAuth)
-    //==============================================
+router.post("/update", regionAuth);
+//==============================================
 
 
 // ===== Authentication =========
@@ -35,5 +37,7 @@ router.route("/create").post(createRegion);
 
 router.route("/data")
     .get(getRegionData);
+
+router.route('/update').post(updateRegion);
 
 module.exports = router;
