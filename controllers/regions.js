@@ -3,7 +3,7 @@ const { Regions } = require('../models');
 const { generateRegionsData } = require('../models/data_generator');
 
 
-
+let populated = false;
 // console.log(Admin.classLevelMethod());
 
 const getRegionData = asyncHandler(async(req, res, next) => {
@@ -30,11 +30,15 @@ const getAllRegions = asyncHandler(async(req, res, next) => {
 const createRegion = asyncHandler(async(req, res, next) => {
     // let id = rand(10);
     // console.log(req.body)
+    if (populated) {
+        return res.status(200).json({ message: "Already Created Regions" });
+    }
     let regions = generateRegionsData();
 
 
     Regions.bulkCreate(regions)
         .then((created_regions) => {
+            populated = true;
             return res.status(201).json({ message: "created " + created_regions.length + " regions" });
         })
         .catch(err => {
