@@ -36,8 +36,8 @@ Participant.belongsTo(Regions, { onDelete: "CASCADE" });
 sequelize.authenticate().then(() => {
     console.log("Connected To DataBase");
     if (process.env.NODE_ENV === 'development') {
-        sequelize.sync({ force: true }); // drop all tables and create them again
-        // sequelize.sync({ alter: true }); // apply the changes and keep the data in db
+        //sequelize.sync({ force: true }); // drop all tables and create them again
+        sequelize.sync({ alter: true }); // apply the changes and keep the data in db
     } else {
         sequelize.sync(); // create tables if not exists
     }

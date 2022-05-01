@@ -5,6 +5,7 @@ let regionAuth = (req, res, next) => {
 
 
 
+
     let { token } = req.body;
 
     if (!token) {
@@ -41,6 +42,8 @@ let regionAuth = (req, res, next) => {
         req.token = d_token;
 
         req.region = dregion;
+
+        // console.log("Verified Token")
         next();
 
     })

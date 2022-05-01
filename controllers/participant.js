@@ -42,6 +42,9 @@ const getDataById = asyncHandler(async(req, res, next) => {
 
 
 const createParticipant = asyncHandler(async(req, res, next) => {
+    console.log(req.files);
+    res.sendStatus(201);
+    return;
     let { region, body } = req;
 
     let { province_id, ...data } = body;
