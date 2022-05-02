@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { AppModel } = require('./utils');
+const { FILES_URL } = require('../config/config');
 
 
 const Schema = {
@@ -202,7 +203,47 @@ const Schema = {
     },
 }
 
-class Participant extends AppModel {}
+class Participant extends AppModel {
+    static filterJSON(instance) {
+        let file_fields = ['passport', 'birth_certificate', 'letter_of_recommendation']
+
+        if (Array.isArray(instance)) {
+            let response = instance.map(each => {
+                let { custom_password, password, default_password, createdAt, updatedAt, token, ...rest } = each.dataValues;
+
+                file_fields.forEach(each => {
+                    value = rest[each]
+
+                    if (value) {
+                        rest[each] = `${FILES_URL}/api/files/${value}`;
+                    }
+
+
+                })
+
+                return rest
+            })
+
+
+            return response;
+        }
+        let { password, token, ...rest } = instance.toJSON(); //.toJson();
+
+
+
+        Object.entries(rest).forEach(([field, value]) => {
+
+            if (file_fields.includes(field)) {
+                if (value) {
+                    rest[each] = `${FILES_URL}/api/files/${value}`;
+                }
+            };
+        });
+
+
+        return rest;
+    }
+}
 
 module.exports = (sequelize) => {
     Participant.init({...Schema }, {

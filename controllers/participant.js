@@ -2,7 +2,6 @@ const asyncHandler = require("express-async-handler");
 const { Participant, Province } = require('../models');
 
 
-
 // console.log(Admin.classLevelMethod());
 
 const getAllData = asyncHandler(async(req, res, next) => {
@@ -42,13 +41,31 @@ const getDataById = asyncHandler(async(req, res, next) => {
 
 
 const createParticipant = asyncHandler(async(req, res, next) => {
-    console.log(req.files);
-    res.sendStatus(201);
-    return;
-    let { region, body } = req;
+
+    let { region, body, files } = req;
+
+
+    let uploaded_files = {};
+
+    Object.entries(files).forEach(([field, config]) => {
+        uploaded_files[field] = `${config[0].filename}`;
+    })
+
+    // console.log(uploaded_files);
+    // console.log(typeof body)
+    // res.status(201).json({
+    //     ...uploaded_files,
+    //     ...body
+    // });
+
+    // console.log(body)
+    // console.log(files)
 
     let { province_id, ...data } = body;
-
+    data = {
+        ...data,
+        uploaded_files
+    }
 
     if (!province_id) {
         return res.status(400).json({

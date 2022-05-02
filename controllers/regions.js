@@ -54,6 +54,7 @@ const createRegion = asyncHandler(async(req, res, next) => {
 // Authentication
 const loginRegion = asyncHandler(async(req, res, next) => {
     // return res.sendStatus(200)
+    console.log(req.body)
     const { email, password } = req.body;
 
     Regions.findOne({ where: { email } })

@@ -3,9 +3,6 @@ const { Regions } = require('../models');
 let regionAuth = (req, res, next) => {
     let d_token = null;
 
-
-
-
     let { token } = req.body;
 
     if (!token) {
@@ -13,11 +10,11 @@ let regionAuth = (req, res, next) => {
         if (auth) {
             d_token = auth;
         } else {
-            res.status(401).json({
+            return res.status(401).json({
                 error: true,
                 message: "No Authentication Token Found, required you are logged in"
             });
-            return
+
         }
     } else {
         d_token = token;
@@ -26,11 +23,11 @@ let regionAuth = (req, res, next) => {
     Regions.decodeToken(d_token, (err, dregion) => {
         if (err) {
             console.log(err)
-            res.status(401).json({
+            return res.status(401).json({
                 error: true,
                 message: 'Could Not Verify Logged In'
             })
-            return
+
         }
 
         if (!dregion) return res.status(401).json({
