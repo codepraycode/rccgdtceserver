@@ -4,7 +4,7 @@
 
 # Environment Variables
 /*.env
-files/**
+uploads/**
 !*.keep
 
 npm-debug.log

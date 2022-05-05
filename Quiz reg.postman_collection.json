@@ -10,9 +10,21 @@
 			"item": [
 				{
 					"name": "Get Participant Data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{url}}/api/participant/data",
 							"host": [
@@ -98,7 +110,12 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"first_name\":\"Lorem\",\r\n    \"last_name\": \"Ipsum\",\r\n    \"gender\": \"male\",\r\n    \"category\": \"lower_junior\",\r\n    \"date_of_birth\": \"2004/4/15\",\r\n    \"zone\": \"Zone 4\",\r\n    \"area\": \"Area 32\",\r\n    \"parish\": \"Jesus House\",\r\n    \"quiz_category\": \"quiz_competition\",\r\n    \"province_id\":\"821d448a-6f00-4d9d-9cfd-c4a770f95165\",\r\n    \"regional_coordinator\": \"Mr Samuel\",\r\n    \"provincial_coordinator\": \"Mr Kunle\"\r\n}"
+							"raw": "{\r\n    \"first_name\":\"Precious\",\r\n\"last_name\":\"Olusola\",\r\n\"other_name\":\"Olamilekan\",\r\n\"gender\":\"male\",\r\n\"category\":\"super_teen\",\r\n\"date_of_birth\":\"2002/10/25\",\r\n\"zone\":1,\r\n\"area\":33,\r\n\"parish\":\"Elim\",\r\n\"quiz_category\":\"quiz_competition\",\r\n\"regional_coordinator\":\"Mr Samuel Adeniyi\",\r\n\"provincial_coordinator\":\"Mrs Adebayo Oluwatoyin\",\r\n\"province_id\":\"2a80a1c4-9cbc-4856-b0a9-efa0729181ae\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
 							"raw": "{{url}}/api/participant/create",
@@ -109,6 +126,78 @@
 								"api",
 								"participant",
 								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Participant File Upload",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "passport",
+									"type": "file",
+									"src": "/C:/Users/User/Pictures/passport (2).jpg"
+								},
+								{
+									"key": "birth_certificate",
+									"type": "file",
+									"src": "/C:/Users/User/Documents/marketQuote.txt"
+								},
+								{
+									"key": "letter_of_recommendation",
+									"type": "file",
+									"src": "/C:/Users/User/Documents/quotationTemplate.pdf"
+								},
+								{
+									"key": "participant_id",
+									"value": "940f0ba9-bb9e-4f6b-b692-dc83bd90b038",
+									"type": "default",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/participant/9e6df25d-3589-4ec8-b48a-37d3f7d37925/upload",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"participant",
+								"9e6df25d-3589-4ec8-b48a-37d3f7d37925",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "fetch uploaded files",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/uploads/passport-1651783988332.png",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"uploads",
+								"passport-1651783988332.png"
 							]
 						}
 					},
