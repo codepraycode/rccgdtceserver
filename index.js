@@ -19,7 +19,7 @@ process.on("uncaughtException", (err) => {
 
 
 const app = express();
-app.use(cors());
+
 
 
 // BODY PARSING
@@ -27,13 +27,16 @@ app.use(express.json());
 // app.use(bodyParser.json())
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
+
+
+app.use(cors());
 app.use(errorHandler);
 
 
 app.use("/api/participant", require("./routes/participant"));
 app.use("/api/region", require("./routes/region"));
 app.use("/api/province", require("./routes/province"));
-app.use("/api/files", require("./routes/files"));
+app.use("/api/uploads", require("./routes/uploads"));
 
 
 const PORT = process.env.PORT || 5000;

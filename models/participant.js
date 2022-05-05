@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { AppModel } = require('./utils');
-const { FILES_URL } = require('../config/config');
+const { APP_URL } = require('../config/config');
 
 
 const Schema = {
@@ -209,13 +209,13 @@ class Participant extends AppModel {
 
         if (Array.isArray(instance)) {
             let response = instance.map(each => {
-                let { custom_password, password, default_password, createdAt, updatedAt, token, ...rest } = each.dataValues;
+                let { createdAt, updatedAt, ...rest } = each.dataValues;
 
                 file_fields.forEach(each => {
-                    value = rest[each]
+                    let value = rest[each]
 
                     if (value) {
-                        rest[each] = `${FILES_URL}/api/files/${value}`;
+                        rest[each] = `${APP_URL}/${value}`;
                     }
 
 
@@ -227,7 +227,7 @@ class Participant extends AppModel {
 
             return response;
         }
-        let { password, token, ...rest } = instance.toJSON(); //.toJson();
+        let { createdAt, updatedAt, ...rest } = instance.toJSON(); //.toJson();
 
 
 
@@ -235,7 +235,7 @@ class Participant extends AppModel {
 
             if (file_fields.includes(field)) {
                 if (value) {
-                    rest[each] = `${FILES_URL}/api/files/${value}`;
+                    rest[field] = `${APP_URL}/${value}`;
                 }
             };
         });

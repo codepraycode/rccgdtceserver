@@ -7,7 +7,7 @@ const database = process.env.DB_NAME
 
 // for generating tokens
 const SECRET = process.env.SECRET
-const FILES_URL = `${process.env.BASE_URL}/api/files`
+const APP_URL = `${process.env.BASE_URL}/api`
 
 module.exports = {
     // sequelize
@@ -18,5 +18,5 @@ module.exports = {
     database,
     dialect: 'mysql',
     SECRET,
-    FILES_URL
+    APP_URL
 }

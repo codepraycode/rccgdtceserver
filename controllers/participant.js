@@ -1,8 +1,8 @@
 const asyncHandler = require("express-async-handler");
 const { Participant, Province } = require('../models');
 
-
-// console.log(Admin.classLevelMethod());
+const uploadFile = require('../middlewares/upload');
+const multer = require("multer");
 
 const getAllData = asyncHandler(async(req, res, next) => {
     const { region } = req;
@@ -42,36 +42,18 @@ const getDataById = asyncHandler(async(req, res, next) => {
 
 const createParticipant = asyncHandler(async(req, res, next) => {
 
-    let { region, body, files } = req;
+    // Everything went fine
+    let { region, body } = req;
 
-
-    let uploaded_files = {};
-
-    Object.entries(files).forEach(([field, config]) => {
-        uploaded_files[field] = `${config[0].filename}`;
-    })
-
-    // console.log(uploaded_files);
-    // console.log(typeof body)
-    // res.status(201).json({
-    //     ...uploaded_files,
-    //     ...body
-    // });
-
-    // console.log(body)
-    // console.log(files)
 
     let { province_id, ...data } = body;
-    data = {
-        ...data,
-        uploaded_files
-    }
 
     if (!province_id) {
         return res.status(400).json({
             message: " `province_id` not given "
         })
     }
+
 
     // Validate province
     let province = await Province.findOne({
@@ -87,16 +69,17 @@ const createParticipant = asyncHandler(async(req, res, next) => {
         })
     }
 
+
     // if it gets to this point, that means the province is valid;
 
     const new_participant = await Participant.build({...data });
 
+
     new_participant.validate()
         .then(() => {
-            //
+
             new_participant.save()
                 .then(async() => {
-                    // console.log(admin_user.toJSON())
                     await province.addParticipant(new_participant)
                     await region.addParticipant(new_participant)
 
@@ -106,7 +89,7 @@ const createParticipant = asyncHandler(async(req, res, next) => {
                 .catch((error) => {
                     // console.
                     return res.status(409).json({
-                        message: "Admin Already Exist",
+                        message: "Participant Already Exist",
                         // error
                     });
                 })
@@ -114,10 +97,9 @@ const createParticipant = asyncHandler(async(req, res, next) => {
                 // .catch()
         })
         .catch(error => {
-            // console.log(error);
             let error_response = Participant.getCleanError(error);
             return res.status(400).json(error_response);
-        })
+        });
 
 });
 
@@ -167,6 +149,100 @@ const updateParticipant = asyncHandler(async(req, res, next) => {
 });
 
 
+const uploadParticipantFile = asyncHandler(async(req, res, next) => {
+
+    let { pid: participant_id } = req.params;
+
+    if (!participant_id) {
+        return res.status(400).json({
+            message: " `participant_id` not given "
+        })
+    }
+
+
+    // Validate province
+
+    let participant = await Participant.findOne({
+        where: {
+            _id: participant_id
+        }
+    });
+
+    if (!participant) {
+        return res.status(404).json({
+            message: "Participant Could Not Be Resolved"
+        })
+    }
+
+    uploadFile(req, res, async(err) => {
+        if (err instanceof multer.MulterError) {
+            // Error occured during uploading
+            console.error(err);
+            return res.status(400).json({
+                message: `An Error Ocuured While Uploading File(s): '${err.field}' `
+            })
+        } else if (err) {
+            // Other Error outside Mutler
+            console.error(err);
+            return res.status(400).json({
+                message: 'Unable to create participant'
+            })
+        }
+
+        // let { region, body, files } = req;
+        let files = req.files;
+
+        if (!files) {
+            return res.status(400).json({
+                message: 'No Files Uploaded'
+            });
+        }
+
+
+        let uploaded_files = {};
+
+        Object.entries(files).forEach(([field, config]) => {
+            uploaded_files[field] = `uploads/${config[0].filename}`;
+        });
+
+
+        // data = {
+        //     ...data,
+        //     uploaded_files
+        // }
+        try {
+            await participant.update({...uploaded_files });
+        } catch (err) {
+            console.error(err)
+            let error_msg = Participant.getCleanError(err);
+            res.status(400).json({
+                error: error_msg
+            });
+            return
+        }
+
+        try {
+            await participant.save()
+        } catch (error) {
+            res.status(400).json({
+                error: err
+            });
+            return
+        }
+        // return res.status(201).json(uploaded_files);
+        return res.status(201).json(Participant.filterJSON(participant))
+
+
+
+    });
+
+
+
+
+
+});
+
+
 
 const deleteParticipant = asyncHandler(async(req, res, next) => {
     let { region, body } = req;
@@ -178,8 +254,6 @@ const deleteParticipant = asyncHandler(async(req, res, next) => {
     if (!d_participant) {
         return res.sendstatus(200)
     }
-
-    console.log(d_participant);
 
     await d_participant.destroy();
 
@@ -196,6 +270,7 @@ module.exports = {
     getAllData,
     getDataById,
     createParticipant,
+    uploadParticipantFile,
     updateParticipant,
     deleteParticipant
 }

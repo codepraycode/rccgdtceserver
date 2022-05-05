@@ -3,7 +3,7 @@ const router = express.Router();
 
 const {
     getData,
-} = require("../controllers/files");
+} = require("../controllers/uploads");
 
 
 // ============= MIDDLE WARES ===============

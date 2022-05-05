@@ -5,17 +5,17 @@ const path = require("path");
 
 const getData = asyncHandler(async(req, res, next) => {
     const { filename } = req.params;
-    console.log(filename);
+    // console.log(filename);
 
     const options = {
-        root: path.join(__dirname, '../files'),
-        dotfiles: 'deny',
-        headers: {
-            'x-timestamp': Date.now(),
-            'x-sent': true
+            root: path.join(__dirname, '../uploads'),
+            dotfiles: 'deny',
+            headers: {
+                'x-timestamp': Date.now(),
+                'x-sent': true
+            }
         }
-    }
-    console.log(options)
+        // console.log(options)
         // res.sendStatus(200)
     res.sendFile(filename, options, (err) => {
         if (err) {
