@@ -7,8 +7,17 @@ const database = process.env.DB_NAME
 
 // for generating tokens
 const SECRET = process.env.SECRET
-const APP_URL = `${process.env.BASE_URL}/api`
+const BASE_URL = process.env.BASE_URL
+const APP_URL = `${!BASE_URL ? '': BASE_URL+'/api'}`
 
+
+/* 
+    HEROKU DATABSE CREDENTIALS
+    DB_HOST= us-cdbr-east-05.cleardb.net
+    DB_USER= b38ddd9e4f97a3
+    DB_PASSWORD= 7f40e2bb
+    DB_NAME= heroku_9d6497ea327f27c
+ */
 module.exports = {
     // sequelize
     // db
