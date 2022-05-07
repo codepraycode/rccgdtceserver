@@ -3,6 +3,9 @@ require("dotenv").config();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require("cors");
+// add this line below the other import statements
+const helmet = require('helmet');
+const compression = require('compression');
 
 const express = require("express");
 const { errorHandler } = require("./middlewares/auth");
@@ -21,6 +24,8 @@ process.on("uncaughtException", (err) => {
 const app = express();
 
 
+app.use(helmet());
+app.use(compression()); //Compress all routes
 
 // BODY PARSING
 app.use(express.json());
