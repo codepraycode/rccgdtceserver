@@ -227,6 +227,8 @@ class Participant extends AppModel {
 
             return response;
         }
+
+
         let { createdAt, updatedAt, ...rest } = instance.toJSON(); //.toJson();
 
 

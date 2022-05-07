@@ -4,12 +4,16 @@ const { Participant, Province } = require('../models');
 const uploadFile = require('../middlewares/upload');
 const multer = require("multer");
 
+
+// ============ GETTERS ================
+
+// Get All Participant Data
 const getAllData = asyncHandler(async(req, res, next) => {
     const { region } = req;
 
-    // let {province_id} = body;
 
     const participant = await Participant.findAll({ where: { RegionId: region._id } });
+
     if (!participant || participant.length === 0) {
         res.status(200).json([]);
         return
@@ -21,24 +25,29 @@ const getAllData = asyncHandler(async(req, res, next) => {
 });
 
 
-// Get Admin by Id
-const getDataById = asyncHandler(async(req, res, next) => {
-    const { id } = req.body;
+// Get A Participant Data
+const getData = asyncHandler(async(req, res, next) => {
+    const { pid: id } = req.params;
 
-    let d_participant = Participant.findOne({ where: { _id: id } });
+    let d_participant = await Participant.findOne({ where: { _id: id } });
 
     if (!d_participant) {
-        res.status(200).json({});
-        return
-        // throw new Error("Admin Not Found");
+        return res.status(200).json({});
     }
 
 
 
+
+
     return res.status(200).json(Participant.filterJSON(d_participant));
-    // res.sendStatus(200);
 });
 
+// ===========================================
+
+
+// ============ CREATE ================
+
+//  Create a participant
 
 const createParticipant = asyncHandler(async(req, res, next) => {
 
@@ -103,52 +112,7 @@ const createParticipant = asyncHandler(async(req, res, next) => {
 
 });
 
-
-
-const updateParticipant = asyncHandler(async(req, res, next) => {
-    const { region, body } = req;
-
-    //  filter fields
-    let { id, ...updatable_fields } = body
-    // const d_admin = await 
-
-    const participant = await Participant.findOne({ where: { RegionId: region._id, _id: id } });
-
-    if (!participant) {
-        res.status(400).json({
-            message: "Participant could not be identified"
-        });
-        return
-        // throw new Error("No Admin Found");
-    }
-
-
-    try {
-        await participant.update({...updatable_fields });
-    } catch (err) {
-        console.error(err)
-        let error_msg = Participant.getCleanError(err);
-        res.status(400).json({
-            error: error_msg
-        });
-        return
-    }
-
-    try {
-        await participant.save()
-    } catch (error) {
-        res.status(400).json({
-            error: err
-        });
-        return
-    }
-
-
-    return res.status(200).json(Participant.filterJSON(participant));
-
-});
-
-
+// Upload Participant Files
 const uploadParticipantFile = asyncHandler(async(req, res, next) => {
 
     let { pid: participant_id } = req.params;
@@ -242,33 +206,82 @@ const uploadParticipantFile = asyncHandler(async(req, res, next) => {
 
 });
 
+// ===========================================
 
+
+
+
+// ============ MODIFIERS ================
+
+const updateParticipant = asyncHandler(async(req, res, next) => {
+    const { region, body, params } = req;
+
+    //  filter fields
+    let { pid } = params;
+    // const d_admin = await 
+
+    const participant = await Participant.findOne({ where: { RegionId: region._id, _id: pid } });
+
+    if (!participant) {
+        res.status(400).json({
+            message: "Participant could not be identified"
+        });
+        return
+        // throw new Error("No Admin Found");
+    }
+
+
+    try {
+        await participant.update({...body });
+    } catch (err) {
+        console.error(err)
+        let error_msg = Participant.getCleanError(err);
+        res.status(400).json({
+            error: error_msg
+        });
+        return
+    }
+
+    try {
+        await participant.save()
+    } catch (error) {
+        res.status(400).json({
+            error: err
+        });
+        return
+    }
+
+
+    return res.status(200).json(Participant.filterJSON(participant));
+
+});
 
 const deleteParticipant = asyncHandler(async(req, res, next) => {
-    let { region, body } = req;
+    let { region, params } = req;
 
-    let { id } = body;
+    let { pid } = params;
 
-    let d_participant = await Participant.findOne({ where: { RegionId: region._id, _id: id } });
+    let d_participant = await Participant.findOne({ where: { RegionId: region._id, _id: pid } });
 
     if (!d_participant) {
-        return res.sendstatus(200)
+        return res.sendStatus(200)
     }
 
     await d_participant.destroy();
 
-    res.sendStatus(200);
+    return res.sendStatus(200);
 
 
 });
 
+// ===========================================
 
 
 
 
 module.exports = {
     getAllData,
-    getDataById,
+    getData,
     createParticipant,
     uploadParticipantFile,
     updateParticipant,

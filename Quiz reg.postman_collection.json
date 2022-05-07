@@ -9,7 +9,7 @@
 			"name": "Participants",
 			"item": [
 				{
-					"name": "Get Participant Data",
+					"name": "Get all Participants",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -26,14 +26,32 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/participant/data",
+							"raw": "{{url}}/api/participant",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"participant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a participant data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/participant/9e6df25d-3589-4ec8-b48a-37d3f7d37925",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"participant",
-								"data"
+								"9e6df25d-3589-4ec8-b48a-37d3f7d37925"
 							]
 						}
 					},
@@ -52,17 +70,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\":\"3a1ac7da-14b4-40eb-9530-d3851517b03b\"\r\n}"
+							"raw": ""
 						},
 						"url": {
-							"raw": "{{url}}/api/participant/delete",
+							"raw": "{{url}}/api/participant/bd707aa1-98d2-4b51-b701-fa38166d0283",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"participant",
-								"delete"
+								"bd707aa1-98d2-4b51-b701-fa38166d0283"
 							]
 						}
 					},
@@ -81,17 +99,17 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\":\"3a1ac7da-14b4-40eb-9530-d3851517b03b\",\r\n    \"regional_coordinator\": \"Mr Samuel Ayodeji\"\r\n}"
+							"raw": "{\r\n    \"regional_coordinator\": \"Mr Samuel Ayodeji\"\r\n}"
 						},
 						"url": {
-							"raw": "{{url}}/api/participant/update",
+							"raw": "{{url}}/api/participant/9e6df25d-3589-4ec8-b48a-37d3f7d37925",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"participant",
-								"update"
+								"9e6df25d-3589-4ec8-b48a-37d3f7d37925"
 							]
 						}
 					},
@@ -183,25 +201,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "fetch uploaded files",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/api/uploads/passport-1651783988332.png",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"uploads",
-								"passport-1651783988332.png"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -221,7 +220,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"region6@rccgdtce.com\",\r\n    \"password\":\"LFGxW5E\"\r\n}"
+							"raw": "{\r\n    \"email\":\"region28@rccgdtce.com\",\r\n    \"password\":\"u62es4t\"\r\n}"
 						},
 						"url": {
 							"raw": "{{url}}/api/region/login",
@@ -428,6 +427,25 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "fetch uploaded files",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/uploads/passport-1651783988332.png",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"uploads",
+						"passport-1651783988332.png"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

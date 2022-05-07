@@ -3,7 +3,7 @@ const router = express.Router();
 
 const {
     getAllData,
-    // getDataById,
+    getData,
     createParticipant,
     uploadParticipantFile,
     updateParticipant,
@@ -15,11 +15,18 @@ const {
 // const multer = require("multer");
 const { regionAuth } = require("../middlewares/auth");
 
+router.get("/", regionAuth);
 router.post("/create", regionAuth);
-router.post("/upload", regionAuth); //, uploadFile);
-router.put("/update", regionAuth);
-router.get("/data", regionAuth);
-router.delete("/delete", regionAuth);
+router.post("/:pid/upload", regionAuth); //, uploadFile);
+
+
+router.get("/:pid", regionAuth)
+router.put("/:pid", regionAuth)
+router.delete("/:pid", regionAuth)
+
+// router.put("/update", regionAuth);
+
+// router.delete("/delete", regionAuth);
 // ==========================================
 
 
@@ -28,16 +35,23 @@ router.delete("/delete", regionAuth);
 
 
 
-router.route("/data")
-    .get(getAllData);
-
 router.route('/create').post(createParticipant);
+
 router.route('/:pid/upload').post(uploadParticipantFile);
 
-router.route("/update")
+router.route("/:pid")
+    .get(getData)
     .put(updateParticipant)
+    .delete(deleteParticipant)
 
-router.route("/delete").delete(deleteParticipant)
+// router.route("/update")
+//     .put(updateParticipant)
+
+// router.route("/delete").delete(deleteParticipant)
+
+
+router.route("/")
+    .get(getAllData);
 
 
 module.exports = router;
