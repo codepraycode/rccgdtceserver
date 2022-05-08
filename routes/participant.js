@@ -7,7 +7,9 @@ const {
     createParticipant,
     uploadParticipantFile,
     updateParticipant,
-    deleteParticipant
+    deleteParticipant,
+
+    getCategories
 } = require("../controllers/participant");
 
 
@@ -36,6 +38,9 @@ router.delete("/:pid", regionAuth)
 
 
 router.route('/create').post(createParticipant);
+
+router.route('/categories').get(getCategories);
+router.route('/categories/:quiz').get(getCategories);
 
 router.route('/:pid/upload').post(uploadParticipantFile);
 

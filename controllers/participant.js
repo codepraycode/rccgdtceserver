@@ -42,6 +42,24 @@ const getData = asyncHandler(async(req, res, next) => {
     return res.status(200).json(Participant.filterJSON(d_participant));
 });
 
+
+// Get Valid Participant Categories
+const participant_categories = ['lower_junior', 'upper_junior', 'lower_teen', 'super_teen']
+const quiz_categories = ['quiz_competition', 'bible_recitation', 'essay_writting', 'debate', 'spelling_bee']
+
+const getCategories = asyncHandler(async(req, res, next) => {
+
+    const { quiz } = req.params;
+
+    if (quiz) {
+        //  Get Quiz Categories
+        return res.status(200).json(quiz_categories)
+    }
+
+    return res.status(200).json(participant_categories)
+});
+
+
 // ===========================================
 
 
@@ -285,5 +303,8 @@ module.exports = {
     createParticipant,
     uploadParticipantFile,
     updateParticipant,
-    deleteParticipant
+    deleteParticipant,
+
+
+    getCategories
 }

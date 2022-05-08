@@ -79,7 +79,7 @@ const Schema = {
                 msg: "Must be either 'lower_junior', 'upper_junior','lower_teen', or 'super_teen'"
             },
             notNull: {
-                msg: "Must be either 'male' or 'female' "
+                msg: "Must be either 'lower_junior', 'upper_junior','lower_teen', or 'super_teen'"
             }
         }
 
