@@ -68,7 +68,7 @@ const Schema = {
 
     },
 
-    category: {
+    participant_category: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {

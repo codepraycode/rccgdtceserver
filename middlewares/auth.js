@@ -3,7 +3,9 @@ const { Regions } = require('../models');
 let regionAuth = (req, res, next) => {
     let d_token = null;
 
-    let { token } = req.body;
+    let token = req.body.token || req.headers['x-access-token'];
+
+    // console.log("Token >", req.body)
 
     if (!token) {
         let { auth } = req.cookies;
